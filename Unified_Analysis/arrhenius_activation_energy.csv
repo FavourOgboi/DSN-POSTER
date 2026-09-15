@@ -1,0 +1,5 @@
+Study,n_dose_groups,Ea_mean_kJ_mol,Ea_std_kJ_mol,Ea_values_kJ_mol
+P1-Temperature,6,61.1096652697301,9.648769212759492,"[np.float64(42.42), np.float64(56.14), np.float64(62.13), np.float64(66.12), np.float64(68.65), np.float64(71.2)]"
+P2-Temperature,6,66.51492779050558,15.139140844898632,"[np.float64(45.36), np.float64(54.25), np.float64(60.3), np.float64(70.12), np.float64(78.37), np.float64(90.7)]"
+P3-Okro-Acid,4,11.223893046981672,9.67881990310075,"[np.float64(5.46), np.float64(-0.64), np.float64(15.27), np.float64(24.81)]"
+P3-Okro-Basic,3,-180.18821273157337,513.4367770393545,"[np.float64(76.43), np.float64(279.75), np.float64(-896.75)]"

@@ -1,0 +1,15 @@
+Train,Test,Variable,Train_min,Train_max,Test_min,Test_max,Classification
+P1+P2,P3,Dose_Value,0.0,450.0,50.0,200.0,interpolation
+P1+P2,P3,Temp_C,30.0,80.0,30.0,60.0,interpolation
+P1+P2,P3,Molarity_M,0.5,1.5,1.0,2.5,extrapolation
+P1+P2,P3,Medium_Type,,,,,extrapolation (unseen media: {'Basic'})
+P1+P3,P2,Dose_Value,0.0,250.0,0.0,450.0,extrapolation
+P1+P3,P2,Temp_C,30.0,80.0,30.0,70.0,interpolation
+P1+P3,P2,Time_h,5.0,125.0,3.0,15.0,extrapolation
+P1+P3,P2,Molarity_M,1.0,2.5,0.5,1.5,extrapolation
+P1+P3,P2,Medium_Type,,,,,interpolation
+P2+P3,P1,Dose_Value,0.0,450.0,0.0,250.0,interpolation
+P2+P3,P1,Temp_C,30.0,70.0,40.0,80.0,extrapolation
+P2+P3,P1,Time_h,3.0,15.0,5.0,125.0,extrapolation
+P2+P3,P1,Molarity_M,0.5,2.5,1.0,1.0,interpolation
+P2+P3,P1,Medium_Type,,,,,interpolation

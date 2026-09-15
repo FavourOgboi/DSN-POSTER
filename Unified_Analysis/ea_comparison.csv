@@ -1,0 +1,2 @@
+P1_Ea_mean,P1_Ea_std,P1_n_dose_groups,P2_Ea_mean,P2_Ea_std,P2_n_dose_groups,difference_kJ_mol,SE_of_difference,welch_t_stat,welch_p_value,mannwhitney_u_stat,mannwhitney_p_value,cohens_d,conclusion
+61.11000000000001,10.571822927007434,6,66.51666666666667,16.583375611336393,6,5.406666666666659,8.028820862645052,-0.6734073108819446,0.5186012383430582,15.0,0.6991341991341992,-0.38879189221195265,Not statistically distinguishable within the uncertainty of the fitted estimates (p > 0.05 by both Welch's t-test and Mann-Whitney U)

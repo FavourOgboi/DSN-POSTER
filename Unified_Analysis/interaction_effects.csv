@@ -1,0 +1,3 @@
+Study,n,interaction_coef,interaction_p_value,interaction_significant,model_R2
+P1-Temperature,30,-0.0022489011151786745,0.6241982143466112,False,0.8815826138355576
+P2-Temperature,90,-0.002143178082191735,0.5530750618803882,False,0.6236512839427903

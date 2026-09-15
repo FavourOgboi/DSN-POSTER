@@ -1,0 +1,13 @@
+Phase,excluded_index,excluded_value,jackknife_mean_Ea,n_remaining
+P1-Temperature,0,42.42,64.848,5
+P1-Temperature,1,56.14,62.104000000000006,5
+P1-Temperature,2,62.13,60.906000000000006,5
+P1-Temperature,3,66.12,60.108000000000004,5
+P1-Temperature,4,68.65,59.602,5
+P1-Temperature,5,71.2,59.092000000000006,5
+P2-Temperature,0,45.36,70.748,5
+P2-Temperature,1,54.25,68.97,5
+P2-Temperature,2,60.3,67.76,5
+P2-Temperature,3,70.12,65.796,5
+P2-Temperature,4,78.37,64.146,5
+P2-Temperature,5,90.7,61.67999999999999,5
