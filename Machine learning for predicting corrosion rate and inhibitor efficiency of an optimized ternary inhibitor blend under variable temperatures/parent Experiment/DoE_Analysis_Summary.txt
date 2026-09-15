@@ -1,0 +1,47 @@
+DoE Analysis Summary: Optimal Blend Insight
+
+Overview:
+This summary explains the Jupyter notebook "DoE_Analysis_Optimal_Blend_Insight.ipynb", which analyzes the Amos DoE dataset for optimizing a blend of three corrosion inhibitors: Bitter Leaf Extract (BL), Plantain Peel Extract (PP), and Snail Water (SW), along with exposure time. The goal is to minimize Corrosion Rate (CR) and maximize Inhibition Efficiency (IE), then correlate findings with temperature and time-based corrosion studies.
+
+Dataset Description:
+- Source: doe_data.csv from Amos DoE
+- Variables:
+  - BL, PP, SW: Volumes (ml) of the three inhibitors added as a blend
+  - Time: Exposure time (hours)
+  - IE: Inhibition Efficiency (%)
+  - CR: Corrosion Rate (mm/year)
+- Scope: Data from 28 experimental runs with various blends and times.
+
+EDA (Exploratory Data Analysis) Findings:
+- Distributions: BL and SW show wider ranges, CR peaks at higher values but has low-CR outliers.
+- Correlations (from heatmap):
+  - BL and SW correlate negatively with CR (higher doses lower CR).
+  - PP shows weaker correlation.
+  - Time positively correlates with CR (longer exposure increases CR).
+  - IE strongly negatively correlates with CR (higher efficiency lowers rate).
+- Visuals: Histograms, pairplots, and boxplots reveal that higher BL/SW combinations reduce CR, optimal at balanced mixes.
+
+Modeling Approach:
+- Algorithm Comparison: Used Linear Regression, Ridge Regression, Random Forest (RF), and MLP Neural Network, matching patterns from "Corrosion_Rate_Prediction_Project_At_Constant_Temp_but_Different_Time.ipynb" and temperature notebook (same models for consistency).
+- Features: Input BL, PP, SW, Time → Polynomial features (degree 2) for response surface modeling → Standardized → Split train/test (80/20) → 5-fold CV.
+- Performance: Ridge Regression excels (high R², low RMSE/MAE), outperforming others, saved as doe_corrosion_model.pkl.
+- Risk Analysis: No over/underfitting noted; Ridge stabilizes.
+
+Optimal Blend Point:
+- Identified via min CR: Run with BL, PP, SW at specific time yielding lowest CR (e.g., ~1.64 mm/year, IE ~87.6%).
+- Response Surface: Contour plots (e.g., CR vs BL, PP at fixed SW=5, Time=100h) highlight valleys where CR is minimized, marking the "sweet spot" blend.
+- Insights: This point achieves data1 (temp data) and data2 (time data) by providing low CR across conditions, differing from single-conc inhibitors via synergy among BL, PP, SW variables.
+
+Correlation with Temperature and Time Data:
+- Temperature Data (Different Temperature/): Models predict CR at varying temps, showing ~2.36 mm/y at max conc (250 ppm), no temp variation in DoE.
+- Time Data (Different Time/): At constant temp, similar min CR, Ridge best model.
+- Correlation: DoE blend at optimal point achieves comparable/better CR (~1.64 vs ~2.36) than high single conc, suggesting synergy reduces total inhibitor needed for same protection.
+- Deriving Insights: Blend variables (ratios) interact to optimize response; this point "here was the point that had the optimal blend which they use to get data 1 and data2" by balancing variables for minimal CR, formatting acquired data.
+
+Conclusion:
+- Key Insight: The blended inhibitors' variables (BL, PP, SW at time) correlate with temp/time data by enabling low CR via optimized interactions, performing similarly or superiorly as individual concentrates.
+- Before ML: EDA uncovered that higher mixed doses minimize CR.
+- After ML: Response surface quantifies interactions, predicts optimal points.
+- Usage: Run notebook for full code/plots; models saved for predictions.
+
+Files Created: DoE_Analysis_Optimal_Blend_Insight.ipynb, doe_corrosion_model.pkl, doe_scaler.pkl, doe_poly.pkl.
