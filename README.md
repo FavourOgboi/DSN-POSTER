@@ -9,22 +9,29 @@ The project investigates which corrosion relationships remain consistent across 
 The work is organized as:
 
 ```text
-Three experimental phases
-        |
-        v
-302-observation harmonized dataset
-        |
-        +--> Shared physical behaviour
-        |    Arrhenius activation-energy comparison
-        |
-        +--> Conditional environmental behaviour
-        |    Temperature, time, dose, and medium analyses
-        |
-        +--> Predictive and measurement behaviour
-             Cross-phase ML, grouped validation, and held-out phases
+                    UNIFIED STUDY
+                         |
+              +----------+----------+
+              |                     |
+        CORE EVIDENCE         STRESS TEST
+           P1 + P2                P3
+              |                     |
+     Comparable gravimetric   Different experimental/
+     inhibitor systems        measurement regime
+              |                     |
+              +----------+----------+
+                         |
+                         v
+              302-observation harmonized dataset
+                         |
+              +----------+----------+----------+
+              |          |          |          |
+          Shared     Conditional  Predictive  Robustness
+          physical   environmental behaviour  under regime
+          behaviour  behaviour               shift
 ```
 
-The phases are harmonized into one analytical framework, but they are not treated as statistically interchangeable. The programme preserves differences in inhibitor chemistry, dosage units, measurement technique, medium, temperature range, exposure time, and sample size.
+The phases are harmonized into one analytical framework, but they are not treated as statistically interchangeable. P1 and P2 form the **core evidence** for cross-system conclusions: both use gravimetric weight-loss measurement, comparable temperature ranges, and HCl media. P3 serves as a **measurement/experimental-regime stress test** that changes several things simultaneously — inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges — making it unsuitable for equal-weight comparison with P1/P2 but valuable for probing the robustness of learned relationships under regime shift.
 
 ## Experimental Phases
 
@@ -57,7 +64,7 @@ The phases are harmonized into one analytical framework, but they are not treate
 - **Temperature:** 30-60 °C
 - **Dosage:** 50-200 ppm
 - **Sample size:** 17 observations per medium
-- **Role in the unified study:** Exploratory measurement and cross-phase generalization stress test, not equal-weight validation of the gravimetric phases
+- **Role in the unified study:** Measurement/experimental-regime stress test. P3 changes inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges/distributions simultaneously relative to P1/P2 — these factors are partly confounded. P3 is not used as equal-weight evidence alongside the gravimetric phases
 
 ## Research Questions
 
@@ -175,11 +182,11 @@ Leave-one-phase-out results are direction-dependent:
 | P1 + P3 | P2 | 0.40 | 40.0 |
 | P2 + P3 | P1 | 0.57 | 34.2 |
 
-The P1 + P2 to P3 direction requires extrapolation in molarity and an unseen basic medium. Cross-phase generalization is therefore not equivalent to universal prediction of arbitrary unseen inhibitor chemistries.
+The P1 + P2 → P3 direction requires extrapolation in molarity and an entirely unseen medium (NaOH), combined with a different measurement technique, inhibitor system, and experimental structure. Cross-phase generalization is therefore not equivalent to universal prediction of arbitrary unseen inhibitor chemistries. The P3 transfer result is best understood as a stress test of learned relationships under regime shift, not as a measure of core model adequacy.
 
 ### Adding P3 to the Pooled Model
 
-Adding P3 to P1 + P2 decreases performance in most model and validation combinations. This is interpreted as evidence of measurement and distribution shift, not as a failure of the analysis pipeline.
+Adding P3 to P1 + P2 decreases performance in most model and validation combinations. This is interpreted as evidence of experimental and measurement-regime shift — reflecting the multiple simultaneous differences between P3 and the gravimetric phases — not as a failure of the analysis pipeline.
 
 ### Error Concentration
 
@@ -265,15 +272,26 @@ jupyter notebook Unified_Corrosion_Study_Walkthrough.ipynb
 
 The scripts write derived CSV outputs into `Unified_Analysis/`. The notebook reads those outputs, displays the tables and interpretations, and saves poster-ready PNG figures into `Unified_Analysis/figures/`.
 
+**Pipeline authority:** The Python scripts listed above are the authoritative reproducible analysis pipeline. All numerical claims in this repository's documentation are derived from these scripts and their CSV outputs. The walkthrough notebook ([Unified_Corrosion_Study_Walkthrough.ipynb](Unified_Analysis/Unified_Corrosion_Study_Walkthrough.ipynb)) provides a narrative presentation of the same results and is useful for understanding the analysis flow, but should be treated as a companion walkthrough rather than the primary reproducibility mechanism.
+
 ## Evidence Tiers and Limitations
 
-### Tier 1: P1 and P2 Gravimetric Evidence
+### Core Evidence: P1 and P2 Gravimetric Phases
 
-Used for the strongest cross-system conclusions, especially activation-energy convergence and the temperature/concentration regime comparison.
+P1 and P2 provide the core evidence for cross-system conclusions. Both use gravimetric weight-loss measurement in HCl at comparable temperature ranges (P1: 40–80°C, P2: 30–70°C, overlapping 40–70°C), enabling the strongest claims: activation-energy convergence, temperature/concentration regime comparison, and conditional environmental-driver behaviour.
 
-### Tier 2: P3 Electrochemical Evidence
+### Stress Test: P3 Electrochemical/Experimental-Regime Shift
 
-Used as exploratory evidence and a measurement/generalization stress test. P3 has only 17 observations per medium, a different measurement technique, a different medium structure, and five non-positive corrosion-rate values in the basic dataset.
+P3 serves as a stress test for the robustness of relationships established from the core P1/P2 evidence. P3 differs from P1/P2 in multiple simultaneous ways:
+
+- **Inhibitor system:** Okro leaf extract (vs ternary blend and single green inhibitor)
+- **Measurement technique:** Tafel polarization (vs gravimetric weight loss)
+- **Medium:** HCl and NaOH (vs HCl only)
+- **Experimental structure:** Different factorial design
+- **Sample size:** 17 observations per medium (vs ~30–90 per P1/P2 sub-study)
+- **Studied ranges/distributions:** Different molarity, temperature, and dose ranges
+
+These differences are partly confounded, so P3's lower transfer performance cannot be attributed to any single factor. P3 has five non-positive corrosion-rate values in the basic dataset, further limiting its reliability for quantitative conclusions.
 
 ### Important Limitations
 
@@ -287,12 +305,19 @@ Used as exploratory evidence and a measurement/generalization stress test. P3 ha
 
 ## Final Research Position
 
-The contribution of this work is not simply that machine learning can predict corrosion rate. The unified analysis identifies:
+The contribution of this work is not simply that machine learning can predict corrosion rate. The unified analysis establishes:
 
-1. A formally tested activation-energy convergence between two independently formulated gravimetric inhibitor systems.
-2. Conditional environmental-driver behaviour: temperature dominates in temperature-varying gravimetric phases, while dose dominates in time-varying phases.
-3. The magnitude of validation leakage caused by structured experimental conditions and replicates.
-4. Direction-dependent cross-phase transfer and the role of extrapolation and measurement shift.
-5. The specific experimental regions where the pooled model fails, rather than hiding those failures behind one global score.
+**From the core evidence (P1 + P2):**
+
+1. A formally tested activation-energy convergence between two independently formulated gravimetric inhibitor systems — the strongest single result, showing that different green inhibitor chemistries produce statistically indistinguishable apparent activation energies under comparable conditions.
+2. Conditional environmental-driver behaviour: temperature dominates in temperature-varying gravimetric phases, while dose dominates in time-varying phases — a pattern confirmed by three independent evidence layers (correlation, permutation importance, ablation).
+3. The magnitude of validation leakage caused by structured experimental conditions and replicates — a methodological insight applicable beyond this specific study.
+
+**From the stress test (P3):**
+
+4. Direction-dependent cross-phase transfer and the role of extrapolation under experimental/measurement-regime shift — P3 changes inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges simultaneously, so its lower transfer performance cannot be attributed to any single factor.
+5. The specific experimental regions where the pooled model fails (P3, basic medium, Tafel measurement, high temperature), reported transparently rather than hidden behind one global score.
+
+The core research question is: *"What remains consistent when corrosion conditions change?"* The stress-test question is: *"How robust are those learned relationships when the experimental and measurement regime changes?"*
 
 All claims should be read together with [REVIEWER_CHALLENGES.md](REVIEWER_CHALLENGES.md), which records whether each major claim is supported, conditional, not comparable, or out of scope.

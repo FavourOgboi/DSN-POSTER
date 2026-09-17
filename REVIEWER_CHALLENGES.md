@@ -2,7 +2,7 @@
 
 *A living audit trail: every major scientific/methodological question a critical reviewer could raise about this unified corrosion-inhibitor study, mapped to the specific analysis that answers it (or the explicit limitation that admits it can't be answered yet). Status is only marked IMPLEMENTED once the Result/Conclusion fields below are filled with real numbers from the scripts in `Unified_Analysis/` -- no placeholder is left as a final answer.*
 
-**Programme summary**: three experimental phases (P1 = ternary blend BL+PP+SW, weight loss; P2 = single green inhibitor, weight loss; P3 = Okro leaf extract, Tafel electrochemical) run within one in-house lab programme, harmonized into a 302-row master dataset (`Unified_Analysis/master_corrosion_dataset.csv`).
+**Programme summary**: three experimental phases (P1 = ternary blend BL+PP+SW, weight loss; P2 = single green inhibitor, weight loss; P3 = Okro leaf extract, Tafel electrochemical) run within one in-house lab programme, harmonized into a 302-row master dataset (`Unified_Analysis/master_corrosion_dataset.csv`). **Study architecture**: P1 + P2 form the **core evidence** (comparable gravimetric systems); P3 serves as a **measurement/experimental-regime stress test** that changes inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges simultaneously.
 
 ---
 
@@ -12,7 +12,7 @@
 **Script:** `Unified_Analysis/data_quality_audit.py`
 **Output:** `comparability_matrix.csv`
 **Result:** An explicit comparability matrix (Material / Corrosion target / Measurement technique / Inhibitor system / Medium / Temperature range / Dose unit / Time range / Sample size) rates each dimension as Comparable / Partial / Not comparable across P1/P2/P3 rather than assuming equivalence.
-**Conclusion:** Pooling does not imply equivalence. The three phases share material, target variable, and general corrosion mechanism, but differ in inhibitor chemistry, technique, and dosage units -- the analysis pipeline treats each dimension explicitly rather than assuming interchangeability.
+**Conclusion:** Pooling does not imply equivalence. The three phases share material, target variable, and general corrosion mechanism, but differ in inhibitor chemistry, technique, and dosage units -- the analysis pipeline treats each dimension explicitly rather than assuming interchangeability. Under the study's two-tier architecture, P1 and P2 are combined as core evidence (both gravimetric, HCl, comparable temperature ranges), while P3 is retained as a stress test probing robustness under experimental/measurement-regime shift. The comparability matrix provides the formal justification for this distinction.
 
 ---
 
@@ -22,7 +22,7 @@
 **Script:** `Unified_Analysis/cross_phase_model_experiments.py`
 **Output:** `model_leaderboard.csv`, `leave_one_phase_out_results.csv`
 **Result:** Technique is retained as an explicit categorical feature. P3 (Tafel) is evaluated separately from P1/P2 (weight loss) throughout -- Config C_P3 alone produces negative R² for every model/CV scheme (e.g. CatBoost standard R²=-1.61, grouped R²=-5.10), while P1/P2 individually reach R²=0.94-0.98 (standard CV; see leakage caveat in Q9).
-**Conclusion:** Poor P3 performance is interpreted in the context of measurement regime and sample size (n=17/medium vs n~90), not as evidence that Okro extract is a weaker inhibitor. This is the explicit subject of Q19/RQ4.
+**Conclusion:** Poor P3 performance is interpreted in the context of the broader experimental/measurement-regime shift (P3 changes inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges simultaneously relative to P1/P2 — these factors are partly confounded) rather than as evidence that Okro extract is a weaker inhibitor. This is the explicit subject of Q19/RQ4, and is exactly why P3 is classified as a stress test rather than core evidence.
 
 ---
 
@@ -122,7 +122,7 @@
 **Script:** `Unified_Analysis/cross_phase_model_experiments.py`
 **Output:** `p1p2_vs_p1p2p3.csv`
 **Result:** Comparing P1+P2 vs P1+P2+P3 across all 4 models and both CV schemes: R² change from adding P3 is negative in 6 of 8 comparisons (e.g. XGBoost standard CV: 0.964 -> 0.364, a -0.600 change; CatBoost grouped CV: 0.421 -> 0.041, a -0.380 change). Only RandomForest under grouped CV shows a (small, low-base) positive change (+0.226, from -0.169 to +0.057).
-**Conclusion:** Adding P3 mostly **hurts** pooled predictive performance -- consistent with P3 representing a genuine distribution/measurement-regime shift rather than transferable additional signal. Reported neutrally: this is itself a valid, informative result, not a failure of the pipeline.
+**Conclusion:** Adding P3 mostly **hurts** pooled predictive performance -- consistent with P3 representing a genuine experimental and measurement-regime shift (involving simultaneous differences in inhibitor system, technique, medium, structure, sample size, and ranges) rather than transferable additional signal. This result is itself one of the strongest justifications for the study's two-tier architecture: P3 data behaves differently enough from P1/P2 that pooling them degrades rather than improves prediction. Reported neutrally as a valid, informative result, not a failure of the pipeline.
 
 ---
 
@@ -138,7 +138,7 @@
 | P1+P3 | P2 | XGBoost | 0.40 | 40.0 |
 | P2+P3 | P1 | Ridge | 0.57 | 34.2 |
 Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase's inhibitor chemistry was never seen in training).
-**Conclusion:** Cross-phase transfer is **direction-dependent**: training on gravimetric data and predicting Tafel data (P1+P2→P3) fails outright (negative R² for all 4 models); training that includes P3 and predicting a gravimetric phase (P1+P3→P2, P2+P3→P1) achieves moderate transfer. This asymmetry itself is informative about which direction of measurement-regime shift is more severe.
+**Conclusion:** Cross-phase transfer is **direction-dependent**: training on gravimetric data and predicting Tafel data (P1+P2→P3) fails outright (negative R² for all 4 models); training that includes P3 and predicting a gravimetric phase (P1+P3→P2, P2+P3→P1) achieves moderate transfer. The P1+P2→P3 failure reflects the cumulative effect of the experimental/measurement-regime shift (inhibitor system, technique, medium, structure, sample size, and ranges all change simultaneously), not any single factor. This asymmetry itself is informative about which direction of regime shift is more severe, and directly supports classifying P3 as a stress test rather than core evidence.
 
 ---
 
@@ -198,7 +198,7 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 **Script:** `Unified_Analysis/cross_phase_model_experiments.py`
 **Output:** `model_leaderboard.csv` (Config C_P3 rows)
 **Result:** C_P3 alone: R² is negative for every one of the 4 models under both CV schemes (range: -1.6 to -20.6).
-**Conclusion:** P3 is explicitly Tier 2/exploratory. Its ML results are not presented with the same confidence as P1/P2, and are used primarily to test measurement-regime robustness and cross-phase transfer (Q2, Q12), not as a standalone predictive claim.
+**Conclusion:** P3 is explicitly a stress test, not core evidence. Its ML results are not presented with the same confidence as P1/P2, and are used primarily to test robustness under experimental/measurement-regime shift and cross-phase transfer (Q2, Q12), not as a standalone predictive claim. The small sample size is one of several simultaneous differences between P3 and the core gravimetric phases.
 
 ---
 
@@ -207,7 +207,7 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 **Status:** IMPLEMENTED (claim explicitly bounded)
 **Script:** N/A -- interpretive discipline
 **Output:** N/A
-**Result:** P3 performance is interpreted jointly with n=17/medium, the measurement technique, and the phase distribution -- not treated as a general statement about electrochemical measurements.
+**Result:** P3 performance is interpreted jointly with the broader experimental/measurement-regime shift (n=17/medium, different inhibitor system, Tafel measurement technique, dual acid/base media, different experimental structure, and different studied ranges/distributions) -- not attributed to any single factor, and not treated as a general statement about electrochemical measurements.
 **Conclusion:** The conclusion is limited to the present P3 dataset. No general claim about Tafel/electrochemical data quality is made.
 
 ---
@@ -241,7 +241,7 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 2. A quantified, direct answer to "how much does naive CV overestimate performance" (Q9) -- not visible from analyzing any one phase alone with its own historical CV setup.
 3. A quantified test of whether pooling helps or hurts (Q11), and in which direction transfer works better (Q12).
 4. A quantified, not just qualitative, measurement-regime robustness contrast (weight-loss vs Tafel R², matched features/methodology for the first time).
-**Conclusion:** The contribution is not "ML predicts corrosion rate" -- it is identifying which conclusions survive experimental-system changes (Ea), which are conditional (temperature dominance only in gravimetric phases), and which are measurement-dependent (predictive reliability), using a single consistent methodology across all three.
+**Conclusion:** The contribution is not "ML predicts corrosion rate" -- it is identifying which conclusions survive experimental-system changes (Ea convergence from core P1/P2 evidence), which are conditional (temperature dominance only in gravimetric phases), and which depend on the experimental/measurement regime (predictive reliability under P3 stress testing), using a single consistent methodology across all three. The two-tier architecture (core evidence + stress test) makes this structure explicit.
 
 ---
 
@@ -251,16 +251,20 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 **Script:** `Unified_Analysis/cross_phase_model_experiments.py`
 **Output:** `p1p2_vs_p1p2p3.csv`
 **Result:** See Q11 -- performance drops in 6 of 8 model×CV-scheme comparisons when P3 is added.
-**Conclusion:** This is interpreted as evidence that P3 introduces distribution/measurement shift not sufficiently represented by the available features -- not hidden, not treated as a pipeline failure. Combining datasets was never assumed to help; the experiment determined the answer.
+**Conclusion:** This is interpreted as evidence that P3 introduces experimental and measurement-regime shift not sufficiently represented by the available features -- not hidden, not treated as a pipeline failure. This result directly motivated the study's two-tier architecture: the fact that P3 degrades pooled prediction confirms it represents a genuinely different experimental regime, and should be treated as a stress test rather than pooled as equal-weight evidence alongside P1/P2.
 
 ---
 
 ## 24. Final evidence hierarchy
 
 **Status:** IMPLEMENTED (policy applied throughout this document)
-**Tier 1 (strongest evidence):** P1 + P2 weight-loss results -- used for Ea convergence, temperature/concentration behaviour, core corrosion conclusions.
-**Tier 2 (exploratory evidence):** P3 Tafel results -- used for measurement robustness, distribution-shift, cross-phase stress-testing. Never used to independently validate or invalidate a Tier 1 claim.
+
+**Core evidence (P1 + P2):** Weight-loss gravimetric results from two independently formulated inhibitor systems in HCl at comparable temperature ranges. Used for the strongest cross-system conclusions: activation-energy convergence, temperature/concentration environmental-driver behaviour, and core corrosion-science claims. The headline P1/P2 convergence claim must not be weakened or strengthened by P3 results, because P3 is not directly comparable enough for that purpose.
+
+**Stress test (P3):** Tafel electrochemical results from Okro leaf extract in HCl and NaOH. P3 changes several things simultaneously relative to P1/P2: inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges/distributions. These differences are partly confounded. P3 is used to test the robustness of relationships learned from the core evidence under experimental/measurement-regime shift — not as equal-weight evidence, and never to independently validate or invalidate a core P1/P2 claim.
+
 **Computational evidence:** Models A-G, grouped CV, leave-one-phase-out -- used to evaluate predictive relationships, generalization, and feature contribution, reported neutrally (no assumption that more data = better).
+
 **Limitations:** Stated explicitly wherever the current experimental design cannot support a stronger claim (Q13, Q18, Q19).
 
 **Scope-limitation statement (applies throughout this study and the accompanying `POSTER_RESEARCH_SYNTHESIS.md`):**
@@ -287,7 +291,7 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 - **P1+P2 → P3**: Dose and Temperature are interpolation; **Molarity is extrapolation** (test 1.0–2.5M vs train 0.5–1.5M); **Medium is extrapolation** (Basic/NaOH never seen in training). This is the direction that failed outright (negative R² for all 4 models) — now explained by simultaneous molarity and medium extrapolation, not just "distribution shift."
 - **P1+P3 → P2**: Dose, Time, and Molarity are extrapolation; only Temperature and Medium are interpolation.
 - **P2+P3 → P1**: Temperature and Time are extrapolation; Dose, Molarity, and Medium are interpolation. (Best-performing LOPO direction, R²=0.57 with Ridge.)
-**Conclusion:** No claim in this study extends beyond the tested experimental design space. The LOPO R² pattern (Q12) is now directly explained by which variables required extrapolation in each direction, not asserted as an unexplained "measurement shift."
+**Conclusion:** No claim in this study extends beyond the tested experimental design space. The LOPO R² pattern (Q12) is now directly explained by which variables required extrapolation in each direction — the P1+P2→P3 failure involves simultaneous extrapolation in molarity and medium, on top of the experimental/measurement-regime shift (different inhibitor, technique, structure, sample size, and ranges). This is not a simple "measurement shift" but a compound regime change.
 
 ---
 
@@ -334,7 +338,7 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 | Dose | 100-250 ppm | 46.9 (vs ≤100: 22.2, >250: 27.9) |
 | Medium | Basic | 119.0 (vs Acid: 27.7) |
 | Technique | Tafel | 91.2 (vs Weight loss: 25.4) |
-**Conclusion:** Error is highly concentrated in P3/Tafel/Basic-medium/high-temperature conditions — the pooled model's moderate global performance is not evenly distributed; it is substantially worse specifically where the measurement regime and medium differ most from the majority (P1/P2, weight-loss, acid) of the training data.
+**Conclusion:** Error is highly concentrated in P3/Tafel/Basic-medium/high-temperature conditions — the pooled model's moderate global performance is not evenly distributed; it is substantially worse specifically where the experimental/measurement regime and medium differ most from the core evidence (P1/P2, weight-loss, acid). This error concentration directly supports the study's two-tier architecture: the regions where the model fails align precisely with the dimensions along which P3 differs from the core gravimetric phases.
 
 ---
 
@@ -358,9 +362,9 @@ Every direction has `Test_has_unseen_Inhibitor_System=True` (the held-out phase'
 | P1 and P2 have convergent activation energies | Formal Welch's t-test p=0.52, Mann-Whitney p=0.70, stable jackknife sensitivity (Q3) | **Supported** (not statistically distinguishable within uncertainty) |
 | P3's activation energy also converges with P1/P2 | Per-dose-group Ea fits for P3 are wildly inconsistent (Q4) | **Not supported** — excluded from the convergence claim by design |
 | Ternary blend outperforms single inhibitor | DoE uses mL dosage, others use ppm; no validated conversion (Q16-17) | **Not comparable** — DoE reported as standalone result only |
-| Tafel/P3 performs worse due to measurement technique | P3 alone: negative R² regardless of model (Q18, Q31); error stratification shows Tafel/Basic segments dominate pooled-model error (Q30) | **Supported**, but confounded with small sample size (n=17/medium) — cannot fully separate technique effect from sample-size effect |
-| Combining P1+P2+P3 improves prediction over P1+P2 alone | R² decreases in 6/8 model×CV-scheme comparisons (Q11) | **Not supported** — adding P3 generally hurts pooled performance |
-| ML models generalize across experimental phases | Leave-one-phase-out R² ranges from -0.24 (P1+P2→P3) to 0.57 (P2+P3→P1), explained by interpolation/extrapolation structure (Q12, Q26) | **Conditional** — direction-dependent, tied to which variables require extrapolation |
+| Tafel/P3 performs worse due to experimental/measurement-regime shift | P3 alone: negative R² regardless of model (Q18, Q31); error stratification shows Tafel/Basic segments dominate pooled-model error (Q30) | **Supported**, but P3 changes inhibitor system, measurement technique, medium, structure, sample size, and ranges simultaneously — these factors are partly confounded and the lower performance cannot be attributed to any single one |
+| Combining P1+P2+P3 improves prediction over P1+P2 alone | R² decreases in 6/8 model×CV-scheme comparisons (Q11) | **Not supported** — adding P3 generally hurts pooled performance; this directly supports treating P3 as a stress test rather than pooling it as equal-weight evidence |
+| ML models generalize across experimental phases | Leave-one-phase-out R² ranges from -0.24 (P1+P2→P3) to 0.57 (P2+P3→P1), explained by interpolation/extrapolation structure and experimental/measurement-regime shift (Q12, Q26) | **Conditional** — direction-dependent; tied to which variables require extrapolation and the magnitude of the experimental-regime shift |
 | Reported model performance could be due to chance given small n | Permutation/null test: real grouped-CV R² exceeds the 95th percentile of the shuffled-target null distribution (Q28) | **Supported (not due to chance)** — though absolute magnitude remains modest for some configs |
 | Model complexity (RF/XGBoost/CatBoost) is justified over simple Ridge | Meaningful (>0.05 R²) gain in 13/14 config×CV combinations (Q31) | **Supported**, except where data itself is unpredictable (P3 alone) |
 | The model is learning corrosion physics, not phase identity | Identity-feature ablation + permutation-importance share (Q10): ~1% for P1+P2, ~6% for P1+P2+P3 | **Mostly supported** — identity features contribute more once a different measurement technique (P3) is present, most plausibly as a scale/regime indicator |

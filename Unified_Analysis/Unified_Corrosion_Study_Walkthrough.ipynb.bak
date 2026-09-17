@@ -670,8 +670,6 @@
     "---\n",
     "## Part 2 — Why Unify These Three Phases?\n",
     "\n",
-    "**Study architecture:** P1 and P2 form the **core evidence** — both use gravimetric weight-loss measurement in HCl at comparable temperature ranges. P3 serves as a **measurement/experimental-regime stress test** that changes several things simultaneously (inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges). These differences are partly confounded, so P3’s results cannot be attributed to any single factor.\n",
-    "\n",
     "Each phase above is a complete, self-contained study. Individually, they cannot answer questions like:\n",
     "*\"is the temperature sensitivity we see in P1 a coincidence of that particular blend, or a shared\n",
     "property of green-inhibitor corrosion chemistry?\"* Only pooling the raw data — carefully, without\n",
@@ -698,8 +696,7 @@
     "\n",
     "The full question-by-question defense of this approach lives in\n",
     "[`REVIEWER_CHALLENGES.md`](../REVIEWER_CHALLENGES.md) — this notebook narrates the same work with the\n",
-    "actual numbers inline.\n",
-    ""
+    "actual numbers inline.\n"
    ]
   },
   {
@@ -3811,7 +3808,7 @@
    "metadata": {},
    "source": [
     "Adding P3 **hurts** performance in 6 of 8 model×CV-scheme comparisons — consistent with P3\n",
-    "representing a genuine experimental and measurement-regime shift — reflecting multiple simultaneous differences from the gravimetric phases (inhibitor system, technique, medium, structure, sample size, and ranges) — rather than transferable extra signal.\n",
+    "representing a genuine distribution/measurement-regime shift rather than transferable extra signal.\n",
     "This is reported as a legitimate, informative result, not a pipeline failure."
    ]
   },
@@ -5320,8 +5317,7 @@
     "## Part 10 — Final Claim Audit: What Is Actually Supported?\n",
     "\n",
     "Every major claim made anywhere in this research program is classified below as **Supported**,\n",
-    "**Conditional**, or **Not Supported**, based strictly on the evidence generated above.\n",
-    "The audit reflects the study's two-tier architecture: P1 + P2 = core evidence, P3 = measurement/experimental-regime stress test. The full\n",
+    "**Conditional**, or **Not Supported**, based strictly on the evidence generated above. The full\n",
     "question-by-question reasoning (32 reviewer questions in total) lives in\n",
     "[`REVIEWER_CHALLENGES.md`](../REVIEWER_CHALLENGES.md).\n",
     "\n",
@@ -5337,8 +5333,7 @@
     "| Reported model performance could be due to chance | **Supported (not due to chance)** — passes permutation/null test |\n",
     "| Model complexity (RF/XGBoost/CatBoost) is justified over Ridge | **Supported**, except where the data itself is unpredictable (P3 alone) |\n",
     "| The model is learning corrosion physics, not phase identity | **Mostly supported** — identity features contribute minimally except when technique changes |\n",
-    "| Cross-phase generalization implies prediction of any unseen inhibitor chemistry | **Not supported / out of scope** — phase and inhibitor chemistry are fully confounded in this design |\n",
-    ""
+    "| Cross-phase generalization implies prediction of any unseen inhibitor chemistry | **Not supported / out of scope** — phase and inhibitor chemistry are fully confounded in this design |\n"
    ]
   },
   {
@@ -5349,7 +5344,7 @@
     "## Part 11 — Conclusion and What's Next\n",
     "\n",
     "**What this unified analysis actually contributes**, beyond what any single phase's original report\n",
-    "could show (structured as core evidence from P1 + P2, plus a stress test from P3):\n",
+    "could show:\n",
     "\n",
     "1. **A formally tested, chemistry-grounded convergence** in activation energy between two\n",
     "   independently formulated green inhibitor systems (P1, P2) — the strongest single result in this\n",
@@ -5371,8 +5366,7 @@
     "**Next steps**: build the 3-4 poster-ready figures from the CSVs generated in this folder (Ea bar\n",
     "chart with error bars, standard-vs-grouped-CV comparison, leave-one-phase-out chart), finalize the\n",
     "poster title and abstract per `POSTER_RESEARCH_SYNTHESIS.md`, and only pursue a full research paper\n",
-    "once those figures and the poster narrative are locked.\n",
-    ""
+    "once those figures and the poster narrative are locked.\n"
    ]
   }
  ],
