@@ -204,6 +204,7 @@ Pooled-model error is not evenly distributed:
 ### Main Documentation
 
 - [POSTER_RESEARCH_SYNTHESIS.md](POSTER_RESEARCH_SYNTHESIS.md) - research framing, methodology, findings, poster structure, and conclusions
+- [FINDINGS.md](FINDINGS.md) - comprehensive results document tracing every numerical claim to its source CSV file
 - [REVIEWER_CHALLENGES.md](REVIEWER_CHALLENGES.md) - reviewer-question and resolution audit with evidence status, scripts, outputs, and limitations
 - [Unified_Corrosion_Study_Walkthrough.ipynb](Unified_Analysis/Unified_Corrosion_Study_Walkthrough.ipynb) - end-to-end narrative notebook with tables, results, interpretations, and saved visual outputs
 
@@ -215,6 +216,7 @@ Pooled-model error is not evenly distributed:
 - [predictor_ablation.py](Unified_Analysis/predictor_ablation.py) - correlation support, permutation importance, ablation, and interaction analysis
 - [cross_phase_model_experiments.py](Unified_Analysis/cross_phase_model_experiments.py) - Models A-G, grouped CV, phase-identity ablation, model comparison, and leave-one-phase-out testing
 - [rigor_extension.py](Unified_Analysis/rigor_extension.py) - replicate structure, interpolation/extrapolation, target leakage, null testing, repeated validation, error stratification, and model simplicity
+- [generate_poster_figures.py](Unified_Analysis/generate_poster_figures.py) - poster-ready figure generation with professional styling, consistent colour palette, and 300 DPI output
 
 ### Key Data Outputs
 
@@ -234,7 +236,7 @@ Pooled-model error is not evenly distributed:
 
 ### Saved Figures
 
-All seven notebook figures are saved in [Unified_Analysis/figures/](Unified_Analysis/figures/):
+All seven notebook figures are saved in [Unified_Analysis/figures/](Unified_Analysis/figures/), with poster-quality versions prefixed `poster_`:
 
 1. Correlation by phase
 2. Ea convergence headline figure
@@ -243,6 +245,8 @@ All seven notebook figures are saved in [Unified_Analysis/figures/](Unified_Anal
 5. Standard versus grouped cross-validation
 6. Leave-one-phase-out transfer
 7. Error by phase
+
+Poster-ready versions use a consistent academic colour palette, 300 DPI resolution, annotated statistics, and bold typography suitable for conference presentation. Generate them with `python generate_poster_figures.py`.
 
 ## Reproducibility
 
