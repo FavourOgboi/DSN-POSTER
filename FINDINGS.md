@@ -86,8 +86,8 @@ P2's 90 rows per sub-study are exactly **30 unique conditions × 3 replicate mea
 
 | Phase | Dose groups fit | Ea mean (kJ/mol) | Ea std (kJ/mol) | Individual Ea values (kJ/mol) |
 |---|---:|---:|---:|---|
-| P1-Temperature | 6 | 61.1 | 9.6 | 42.42, 56.14, 62.13, 66.12, 68.65, 71.20 |
-| P2-Temperature | 6 | 66.5 | 15.1 | 45.36, 54.25, 60.30, 70.12, 78.37, 90.70 |
+| P1-Temperature | 6 | 61.1 | 10.6 | 42.42, 56.14, 62.13, 66.12, 68.65, 71.20 |
+| P2-Temperature | 6 | 66.5 | 16.6 | 45.36, 54.25, 60.30, 70.12, 78.37, 90.70 |
 | P3-Okro-Acid | 4 | 11.2 | 9.7 | 5.46, -0.64, 15.27, 24.81 |
 | P3-Okro-Basic | 3 | -180.2 | 513.4 | 76.43, 279.75, -896.75 |
 
@@ -354,7 +354,7 @@ Model complexity is generally justified (>0.05 R² gain over Ridge in **13 of 14
 
 ### 6.4 Target Leakage Confirmation
 
-`IE_percent` is mathematically derived from `CR_mm_yr` (blank-comparison formula). Verification on 150 P2 comparisons confirms agreement to within **0.07 percentage points** (max absolute difference: 0.19 pp). This confirms `IE_percent` must never be used as a predictor of CR, which the modelling pipeline already respects.
+`IE_percent` is mathematically derived from `CR_mm_yr` (blank-comparison formula). Verification on 150 P2 comparisons confirms agreement to within **0.28 percentage points** (max absolute difference: 0.28 pp). This confirms `IE_percent` must never be used as a predictor of CR, which the modelling pipeline already respects.
 
 *Source: `target_leakage_audit.csv` (150 P2-Temperature/P2-Time rows, column `abs_diff`).*
 

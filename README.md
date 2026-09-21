@@ -203,9 +203,8 @@ Pooled-model error is not evenly distributed:
 
 ### Main Documentation
 
-- [POSTER_RESEARCH_SYNTHESIS.md](POSTER_RESEARCH_SYNTHESIS.md) - research framing, methodology, findings, poster structure, and conclusions
+- [ABSTRACT.md](ABSTRACT.md) - formal abstract for poster submission, covering motivation, methodology, key results, and contributions
 - [FINDINGS.md](FINDINGS.md) - comprehensive results document tracing every numerical claim to its source CSV file
-- [REVIEWER_CHALLENGES.md](REVIEWER_CHALLENGES.md) - reviewer-question and resolution audit with evidence status, scripts, outputs, and limitations
 - [Unified_Corrosion_Study_Walkthrough.ipynb](Unified_Analysis/Unified_Corrosion_Study_Walkthrough.ipynb) - end-to-end narrative notebook with tables, results, interpretations, and saved visual outputs
 
 ### Unified Analysis Scripts
@@ -324,4 +323,4 @@ The contribution of this work is not simply that machine learning can predict co
 
 The core research question is: *"What remains consistent when corrosion conditions change?"* The stress-test question is: *"How robust are those learned relationships when the experimental and measurement regime changes?"*
 
-All claims should be read together with [REVIEWER_CHALLENGES.md](REVIEWER_CHALLENGES.md), which records whether each major claim is supported, conditional, not comparable, or out of scope.
+All claims should be read together with the [FINDINGS.md](FINDINGS.md) document, which traces every numerical result to its source CSV file.
