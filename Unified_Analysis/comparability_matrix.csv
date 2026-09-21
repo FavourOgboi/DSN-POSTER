@@ -8,3 +8,4 @@ Temperature range,40-80C,30-70C,30-60C,Partial overlap (30-60C)
 Dose unit,ppm (Temp/Time sub-studies) / mL_blend (DoE),ppm,ppm,No -- DoE not comparable to ppm studies
 Time range,25-125h (Time sub-study),3-15h (Time sub-study),not varied (fixed/short),No -- different designs
 Sample size (n),~30-90 per sub-phase,~90 per sub-phase,17 per medium,No -- P3 much smaller
+Role in study,Core,Core,Stress test (measurement-regime shift),"N/A -- hierarchical, not a comparability dimension"

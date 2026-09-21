@@ -53,6 +53,7 @@ def comparability_matrix():
         dict(Dimension="Dose unit", P1="ppm (Temp/Time sub-studies) / mL_blend (DoE)", P2="ppm", P3="ppm", Comparable="No -- DoE not comparable to ppm studies"),
         dict(Dimension="Time range", P1="25-125h (Time sub-study)", P2="3-15h (Time sub-study)", P3="not varied (fixed/short)", Comparable="No -- different designs"),
         dict(Dimension="Sample size (n)", P1="~30-90 per sub-phase", P2="~90 per sub-phase", P3="17 per medium", Comparable="No -- P3 much smaller"),
+        dict(Dimension="Role in study", P1="Core", P2="Core", P3="Stress test (measurement-regime shift)", Comparable="N/A -- hierarchical, not a comparability dimension"),
     ]
     out = pd.DataFrame(rows)
     out.to_csv(OUT / "comparability_matrix.csv", index=False)
