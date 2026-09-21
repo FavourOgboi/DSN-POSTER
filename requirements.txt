@@ -1,0 +1,16 @@
+# Core Numerical & Data Processing
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+statsmodels>=0.14.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+catboost>=1.2.0
+
+# Visualization & Plotting
+matplotlib>=3.7.0
+
+# Interactive Notebooks (optional)
+jupyter>=1.0.0

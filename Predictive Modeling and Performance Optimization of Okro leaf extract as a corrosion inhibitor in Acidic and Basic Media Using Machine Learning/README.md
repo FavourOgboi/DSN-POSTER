@@ -1,5 +1,8 @@
 # Machine Learning-Driven Corrosion Inhibition Study: Okro Leaf Extract in Acidic and Basic Media
 
+> [!NOTE]
+> **Unified Study Context:** This folder contains the standalone Phase 3 (P3) investigation of Okro leaf extract. In the overarching research synthesis ([README.md](../../README.md), [FINDINGS.md](../../FINDINGS.md)), Phase 3 serves as a valuable experimental/measurement-regime stress test across acid and base media. Note that while initial standalone correlations suggested temperature sensitivity in basic media, the unified 3-layer predictor dominance analysis (FINDINGS.md §3.2) demonstrated that P3 predictor rankings are mixed/inconclusive due to non-Arrhenius behavior in basic media and small sample size (N=17 per medium).
+
 ## Overview
 
 This project investigates the corrosion inhibition performance of Okro leaf extract (Abelmoschus esculentus) in acidic (HCl) and basic (NaOH) media using electrochemical techniques, primarily Tafel polarization. The study employs machine learning models to predict corrosion rates and optimize inhibitor concentrations, providing data-driven recommendations for industrial applications.
@@ -53,7 +56,7 @@ This project investigates the corrosion inhibition performance of Okro leaf extr
 **Key Comparative Findings:**
 - **Media Differences**: Basic media shows wider corrosion range but lower baseline rates
 - **Inhibitor Optimization**: Acidic requires 125-200 ppm; basic optimal at 50-125 ppm
-- **Temperature Critical**: Most important factor in both media, especially basic
+- **Temperature Factor**: Strong effect in initial screening, but predictor ranking is mixed/inconclusive under 3-layer cross-phase evaluation (FINDINGS.md §3.2)
 - **Electrochemical Behavior**: Mixed-type inhibition in both, different correlation patterns
 
 ### 4. Feature Engineering
@@ -137,11 +140,13 @@ This project investigates the corrosion inhibition performance of Okro leaf extr
 | Aspect | Acidic Media (HCl) | Basic Media (NaOH) |
 |--------|-------------------|-------------------|
 | **Corrosion Range** | 35-125 mm/yr | 35-221 mm/yr |
-| **Temperature Effect** | Moderate acceleration | Strong dominance |
+| **Temperature Effect** | Moderate acceleration | Mixed effect (non-Arrhenius in basic)* |
 | **Inhibitor Response** | Linear (125-200 ppm optimal) | Non-linear (50 ppm best) |
 | **Concentration Impact** | Acid secondary (r = 0.069) | Base dominant (r = 0.447) |
 | **Best Enhanced Model** | XGBoost (CV R² = 0.338) | MLP (CV R² = -0.408) |
 | **Performance Improvement** | +62% with enhanced features | +33% with enhanced features |
+
+*\*Note: In basic media, standalone tree models ranked Temperature high, but unified 3-layer analysis revealed r(CR, Temp) = -0.377, large negative apparent Ea (-180 ± 513 kJ/mol), and inconclusive cross-layer ranking (FINDINGS.md §3.2).*
 
 ### Engineering Recommendations
 
