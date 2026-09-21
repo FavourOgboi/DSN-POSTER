@@ -1,8 +1,9 @@
-# Unified Green Corrosion Inhibitor Study
+# What Changes, and What Remains Consistent, When Corrosion Conditions Change?
+## An Experimental and Machine Learning Study of Green Inhibitors for Mild Steel
 
-A unified machine-learning and corrosion-science analysis of three experimental phases conducted within one in-house laboratory research programme.
+Green plant-derived corrosion inhibitors are promising sustainable alternatives to toxic synthetic compounds, but their performance depends on operating conditions — temperature, exposure time, solution chemistry, and inhibitor dosage. When these conditions change, which aspects of corrosion behaviour remain consistent across different green inhibitor systems, and which aspects shift?
 
-The project investigates which corrosion relationships remain consistent across experiments, which depend on environmental conditions, and how measurement technique and experimental structure affect machine-learning reliability.
+This study addresses that question by unifying three experimental phases from one in-house laboratory programme into a single analytical framework, combining Arrhenius activation-energy analysis (experimental/physical) with machine learning models (predictive/methodological) across a harmonized 302-observation dataset.
 
 ## Research Architecture
 
@@ -308,19 +309,18 @@ These differences are partly confounded, so P3's lower transfer performance cann
 
 ## Final Research Position
 
-The contribution of this work is not simply that machine learning can predict corrosion rate. The unified analysis establishes:
+The contribution of this work is not simply that machine learning can predict corrosion rate. The unified analysis answers a two-part question: *"What remains consistent when corrosion conditions change, and what shifts?"*
 
-**From the core evidence (P1 + P2):**
+**What remains consistent** (from the core evidence, P1 + P2):
 
-1. A formally tested activation-energy convergence between two independently formulated gravimetric inhibitor systems — the strongest single result, showing that different green inhibitor chemistries produce statistically indistinguishable apparent activation energies under comparable conditions.
-2. Conditional environmental-driver behaviour: temperature dominates in temperature-varying gravimetric phases, while dose dominates in time-varying phases — a pattern confirmed by three independent evidence layers (correlation, permutation importance, ablation).
-3. The magnitude of validation leakage caused by structured experimental conditions and replicates — a methodological insight applicable beyond this specific study.
+1. **Activation energy converges** — two independently formulated green inhibitor systems produce statistically indistinguishable apparent activation energies (~61–67 kJ/mol, Welch's t p = 0.52), the strongest single result.
+2. **Environmental-driver patterns are reproducible** — temperature dominates in temperature-varying gravimetric phases, concentration dominates in time-varying phases, confirmed by three independent evidence layers (correlation, permutation importance, ablation).
+3. **Validation leakage is systematic** — structured experimental replicates inflate standard CV by 0.5–1.2 R² units in every configuration, a methodological insight applicable beyond this specific study.
 
-**From the stress test (P3):**
+**What changes** (from the stress test, P3, and conditional analysis):
 
-4. Direction-dependent cross-phase transfer and the role of extrapolation under experimental/measurement-regime shift — P3 changes inhibitor system, measurement technique, medium, experimental structure, sample size, and studied ranges simultaneously, so its lower transfer performance cannot be attributed to any single factor.
-5. The specific experimental regions where the pooled model fails (P3, basic medium, Tafel measurement, high temperature), reported transparently rather than hidden behind one global score.
-
-The core research question is: *"What remains consistent when corrosion conditions change?"* The stress-test question is: *"How robust are those learned relationships when the experimental and measurement regime changes?"*
+4. **Predictor dominance shifts** with experimental design — the "most important factor" is not universal but depends on which variable was varied.
+5. **Cross-phase transfer is direction-dependent** — models trained on gravimetric data fail on Tafel data (R² = −0.24), while the reverse direction transfers moderately (R² = 0.57).
+6. **Error concentrates in specific regimes** — P3, basic medium, Tafel measurement, and high temperature produce the largest prediction failures, reported transparently rather than hidden behind one global score.
 
 All claims should be read together with the [FINDINGS.md](FINDINGS.md) document, which traces every numerical result to its source CSV file.
